@@ -1,0 +1,81 @@
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { Monitor, Server, Cpu, Cloud } from "lucide-react";
+
+const categories = [
+  {
+    icon: Monitor,
+    title: "Frontend",
+    skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+  },
+  {
+    icon: Server,
+    title: "Backend",
+    skills: ["Flask", "REST APIs", "Node.js", "MySQL", "PostgreSQL"],
+  },
+  {
+    icon: Cpu,
+    title: "AI / ML",
+    skills: ["PyTorch", "Deep Learning", "CNNs", "Audio ML", "OpenAI API"],
+  },
+  {
+    icon: Cloud,
+    title: "Cloud & DevOps",
+    skills: ["GCP", "DigitalOcean", "Docker", "CI/CD", "Vercel"],
+  },
+];
+
+const SkillsSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <section id="skills" className="py-32" ref={ref}>
+      <div className="section-container">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <p className="text-sm font-medium text-accent tracking-widest uppercase mb-4">Skills</p>
+          <h2 className="heading-section">
+            Tools of the{" "}
+            <span className="gradient-text">trade.</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {categories.map((cat, i) => (
+            <motion.div
+              key={cat.title}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
+              className="glass-panel p-8 group hover:scale-[1.02] transition-transform duration-300"
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                  <cat.icon size={20} className="text-accent" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground">{cat.title}</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {cat.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="text-sm px-4 py-2 rounded-xl bg-secondary text-secondary-foreground font-medium"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default SkillsSection;
