@@ -5,18 +5,30 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated background gradient */}
-      <div className="absolute inset-0">
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full animate-pulse-glow"
-          style={{
-            background: "radial-gradient(circle, hsl(239 84% 67% / 0.12), hsl(217 91% 60% / 0.06), transparent 70%)",
-          }}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          animate={{ x: [0, 80, -40, 0], y: [0, -60, 40, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[120px] opacity-30"
+          style={{ background: "hsl(var(--accent))" }}
         />
-        <div
-          className="absolute top-1/4 right-1/4 w-[400px] h-[400px] rounded-full animate-float-slow"
-          style={{
-            background: "radial-gradient(circle, hsl(217 91% 60% / 0.08), transparent 70%)",
-          }}
+        <motion.div
+          animate={{ x: [0, -100, 60, 0], y: [0, 50, -80, 0] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[20%] left-[20%] w-[400px] h-[400px] rounded-full blur-[100px] opacity-20"
+          style={{ background: "hsl(var(--accent-blue))" }}
+        />
+        <motion.div
+          animate={{ x: [0, 60, -80, 0], y: [0, -40, 70, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[15%] right-[15%] w-[350px] h-[350px] rounded-full blur-[100px] opacity-20"
+          style={{ background: "hsl(var(--accent))" }}
+        />
+        <motion.div
+          animate={{ x: [0, -50, 90, 0], y: [0, 70, -30, 0] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[60%] left-[60%] w-[300px] h-[300px] rounded-full blur-[80px] opacity-15"
+          style={{ background: "hsl(var(--accent-blue))" }}
         />
       </div>
 
