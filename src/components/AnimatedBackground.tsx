@@ -5,8 +5,8 @@ import { useEffect, useRef } from "react";
 // Normalized to a container: shoulders top, belt middle, knees bottom
 const orionConstellation = {
   name: "Orion",
-  offset: { x: -0.42, y: 0.08 },
-  rotation: 45, // degrees
+  offset: { x: -0.12, y: 0.08 },
+  rotation: -20, // degrees
   stars: [
     // Shoulders
     { x: 0.200, y: 0.150, size: 1.5, color: "rgba(255, 204, 204, 0.7)" },  // Betelgeuse (reddish)
