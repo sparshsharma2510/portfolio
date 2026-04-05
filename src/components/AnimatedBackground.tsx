@@ -91,33 +91,6 @@ const AnimatedBackground = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    const spawnComet = () => {
-      const side = Math.random();
-      let x: number, y: number, vx: number, vy: number;
-
-      if (side < 0.5) {
-        // From top
-        x = Math.random() * canvas.width;
-        y = -10;
-        vx = (Math.random() - 0.3) * 3;
-        vy = Math.random() * 2 + 1.5;
-      } else {
-        // From left
-        x = -10;
-        y = Math.random() * canvas.height * 0.6;
-        vx = Math.random() * 3 + 1.5;
-        vy = Math.random() * 1.5 + 0.5;
-      }
-
-      const maxLife = 120 + Math.random() * 80;
-      comets.push({
-        x, y, vx, vy,
-        length: 40 + Math.random() * 60,
-        opacity: 0.3 + Math.random() * 0.4,
-        life: 0,
-        maxLife,
-      });
-    };
 
     const drawConstellations = () => {
       const w = canvas.width;
