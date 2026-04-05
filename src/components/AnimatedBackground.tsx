@@ -100,15 +100,26 @@ const AnimatedBackground = () => {
       allConstellations.forEach((constellation) => {
         const ox = constellation.offset.x * w;
         const oy = constellation.offset.y * h;
+        const rot = ((constellation as any).rotation || 0) * Math.PI / 180;
+
+        // Helper to apply rotation around constellation center
+        const transform = (sx: number, sy: number) => {
+          const cx = ox + 0.3 * w; // approx center
+          const cy = oy + 0.25 * h;
+          const dx = sx - cx;
+          const dy = sy - cy;
+          return {
+            x: cx + dx * Math.cos(rot) - dy * Math.sin(rot),
+            y: cy + dx * Math.sin(rot) + dy * Math.cos(rot),
+          };
+        };
 
         // Draw lines
         constellation.lines.forEach(([a, b]) => {
           const starA = constellation.stars[a];
           const starB = constellation.stars[b];
-          const ax = ox + starA.x * w;
-          const ay = oy + starA.y * h;
-          const bx = ox + starB.x * w;
-          const by = oy + starB.y * h;
+          const pa = transform(ox + starA.x * w, oy + starA.y * h);
+          const pb = transform(ox + starB.x * w, oy + starB.y * h);
 
           ctx.beginPath();
           ctx.moveTo(ax, ay);
