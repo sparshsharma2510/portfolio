@@ -72,13 +72,13 @@ const CalligraphyName = () => {
       />
 
       {/* Glow effect */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
         className="absolute inset-0 blur-3xl opacity-20 pointer-events-none"
         style={{ background: "var(--gradient-accent)" }}
-      />
+      /> */}
     </div>
   );
 };
