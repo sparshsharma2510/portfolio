@@ -122,8 +122,8 @@ const AnimatedBackground = () => {
           const pb = transform(ox + starB.x * w, oy + starB.y * h);
 
           ctx.beginPath();
-          ctx.moveTo(ax, ay);
-          ctx.lineTo(bx, by);
+          ctx.moveTo(pa.x, pa.y);
+          ctx.lineTo(pb.x, pb.y);
           ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
           ctx.lineWidth = 0.5;
           ctx.stroke();
