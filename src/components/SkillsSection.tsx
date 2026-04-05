@@ -2,28 +2,13 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Monitor, Server, Cpu, Cloud } from "lucide-react";
 import InteractiveCard from "./InteractiveCard";
+import AnimatedIcon from "./AnimatedIcon";
 
 const categories = [
-  {
-    icon: Monitor,
-    title: "Frontend",
-    skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-  },
-  {
-    icon: Server,
-    title: "Backend",
-    skills: ["Flask", "REST APIs", "Node.js", "MySQL", "PostgreSQL"],
-  },
-  {
-    icon: Cpu,
-    title: "AI / ML",
-    skills: ["PyTorch", "Deep Learning", "CNNs", "Audio ML", "OpenAI API"],
-  },
-  {
-    icon: Cloud,
-    title: "Cloud & DevOps",
-    skills: ["GCP", "DigitalOcean", "Docker", "CI/CD", "Vercel"],
-  },
+  { icon: Monitor, title: "Frontend", skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"] },
+  { icon: Server, title: "Backend", skills: ["Flask", "REST APIs", "Node.js", "MySQL", "PostgreSQL"] },
+  { icon: Cpu, title: "AI / ML", skills: ["PyTorch", "Deep Learning", "CNNs", "Audio ML", "OpenAI API"] },
+  { icon: Cloud, title: "Cloud & DevOps", skills: ["GCP", "DigitalOcean", "Docker", "CI/CD", "Vercel"] },
 ];
 
 const SkillsSection = () => {
@@ -57,13 +42,9 @@ const SkillsSection = () => {
               <InteractiveCard className="glass-panel p-8 group h-full">
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-6">
-                    <motion.div
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                      className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors"
-                    >
-                      <cat.icon size={20} className="text-accent" />
-                    </motion.div>
+                    <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                      <AnimatedIcon icon={cat.icon} size={20} />
+                    </div>
                     <h3 className="text-lg font-semibold text-foreground">{cat.title}</h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
