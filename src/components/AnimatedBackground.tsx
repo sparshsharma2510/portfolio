@@ -8,15 +8,15 @@ const constellations = [
     name: "Orion",
     offset: { x: 0.08, y: 0.1 },
     stars: [
-      { x: 0.05, y: 0.0 },   // Betelgeuse
-      { x: 0.12, y: 0.0 },   // Bellatrix
-      { x: 0.07, y: 0.04 },  // shoulder mid
+      { x: 0.05, y: 0.0 },
+      { x: 0.12, y: 0.0 },
+      { x: 0.07, y: 0.04 },
       { x: 0.10, y: 0.04 },
-      { x: 0.06, y: 0.06 },  // belt
+      { x: 0.06, y: 0.06 },
       { x: 0.085, y: 0.06 },
       { x: 0.11, y: 0.06 },
-      { x: 0.04, y: 0.10 },  // Saiph
-      { x: 0.13, y: 0.10 },  // Rigel
+      { x: 0.04, y: 0.10 },
+      { x: 0.13, y: 0.10 },
     ],
     lines: [
       [0, 2], [1, 3], [2, 3], [2, 4], [3, 6],
@@ -37,24 +37,6 @@ const constellations = [
     ],
     lines: [
       [0, 1], [1, 2], [2, 3], [3, 0], [3, 4], [4, 5], [5, 6],
-    ],
-  },
-  {
-    name: "Scorpio",
-    offset: { x: 0.72, y: 0.55 },
-    stars: [
-      { x: 0.0, y: 0.0 },   // head
-      { x: 0.02, y: 0.02 },
-      { x: 0.03, y: 0.0 },
-      { x: 0.05, y: 0.02 },  // Antares
-      { x: 0.07, y: 0.04 },
-      { x: 0.08, y: 0.07 },
-      { x: 0.07, y: 0.09 },
-      { x: 0.09, y: 0.10 },  // stinger
-      { x: 0.06, y: 0.11 },
-    ],
-    lines: [
-      [0, 1], [2, 1], [1, 3], [3, 4], [4, 5], [5, 6], [6, 7], [6, 8],
     ],
   },
   {
@@ -125,10 +107,7 @@ const AnimatedBackground = () => {
         const ox = constellation.offset.x * w;
         const oy = constellation.offset.y * h;
 
-        // Subtle twinkle based on time
-        const twinkle = 0.15 + Math.sin(time * 0.001 + constellation.offset.x * 10) * 0.08;
-
-        // Draw connection lines
+        // Draw connection lines - static white
         constellation.lines.forEach(([a, b]) => {
           const starA = constellation.stars[a];
           const starB = constellation.stars[b];
@@ -140,31 +119,29 @@ const AnimatedBackground = () => {
           ctx.beginPath();
           ctx.moveTo(ax, ay);
           ctx.lineTo(bx, by);
-          ctx.strokeStyle = `hsla(239, 84%, 67%, ${twinkle * 0.4})`;
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
           ctx.lineWidth = 0.5;
           ctx.stroke();
         });
 
-        // Draw stars
-        constellation.stars.forEach((star, si) => {
+        // Draw stars - static white dots
+        constellation.stars.forEach((star) => {
           const sx = ox + star.x * w;
           const sy = oy + star.y * h;
-          const starTwinkle = twinkle + Math.sin(time * 0.002 + si * 1.5) * 0.06;
-          const size = 1.5 + Math.sin(time * 0.003 + si) * 0.5;
 
-          // Glow
+          // Soft glow
           ctx.beginPath();
-          ctx.arc(sx, sy, size * 3, 0, Math.PI * 2);
-          const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, size * 3);
-          glow.addColorStop(0, `hsla(239, 84%, 67%, ${starTwinkle * 0.3})`);
+          ctx.arc(sx, sy, 4, 0, Math.PI * 2);
+          const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, 4);
+          glow.addColorStop(0, "rgba(255, 255, 255, 0.15)");
           glow.addColorStop(1, "transparent");
           ctx.fillStyle = glow;
           ctx.fill();
 
           // Star dot
           ctx.beginPath();
-          ctx.arc(sx, sy, size, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(240, 7%, 97%, ${starTwinkle * 0.8})`;
+          ctx.arc(sx, sy, 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
           ctx.fill();
         });
       });
@@ -200,7 +177,7 @@ const AnimatedBackground = () => {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 84%, 67%, ${p.opacity})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
         ctx.fill();
       });
 
