@@ -131,8 +131,7 @@ const AnimatedBackground = () => {
 
         // Draw stars with their specific colors and sizes
         constellation.stars.forEach((star) => {
-          const sx = ox + star.x * w;
-          const sy = oy + star.y * h;
+          const { x: sx, y: sy } = transform(ox + star.x * w, oy + star.y * h);
 
           // Glow
           ctx.beginPath();
