@@ -83,8 +83,6 @@ const AnimatedBackground = () => {
     if (!ctx) return;
 
     let animationId: number;
-    let comets: Comet[] = [];
-    let lastCometSpawn = 0;
 
     const resize = () => {
       canvas.width = window.innerWidth;
