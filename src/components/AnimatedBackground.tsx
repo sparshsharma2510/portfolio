@@ -1,27 +1,77 @@
-import { motion } from "framer-motion";
-import ConstellationCards from "./ConstellationCards";
+import { useEffect, useRef } from "react";
 
 const AnimatedBackground = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationId: number;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    // Generate random stars once
+    const starCount = 220;
+    const stars = Array.from({ length: starCount }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      size: Math.random() * 1.6 + 0.3,
+      baseOpacity: Math.random() * 0.6 + 0.2,
+      twinkleSpeed: Math.random() * 0.008 + 0.002,
+      twinkleOffset: Math.random() * Math.PI * 2,
+    }));
+
+    const animate = (time: number) => {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      stars.forEach((star) => {
+        const twinkle = Math.sin(time * star.twinkleSpeed + star.twinkleOffset);
+        const opacity = star.baseOpacity + twinkle * 0.15;
+        const sx = star.x * w;
+        const sy = star.y * h;
+
+        // Glow
+        ctx.beginPath();
+        ctx.arc(sx, sy, star.size * 2.5, 0, Math.PI * 2);
+        const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, star.size * 2.5);
+        glow.addColorStop(0, `rgba(255, 255, 255, ${opacity * 0.15})`);
+        glow.addColorStop(1, "transparent");
+        ctx.fillStyle = glow;
+        ctx.fill();
+
+        // Star dot
+        ctx.beginPath();
+        ctx.arc(sx, sy, star.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.fill();
+      });
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
   return (
     <div className="fixed inset-0 z-0 pointer-events-none" style={{
       background: "linear-gradient(180deg, #030510 0%, #060a1a 30%, #0a0e24 60%, #050816 100%)"
     }}>
-      {/* CSS Constellation Cards */}
-      <ConstellationCards />
-
-      {/* Subtle gradient orbs — very low opacity */}
-      <motion.div
-        animate={{ x: [0, 100, -50, 0], y: [0, -80, 60, 0], scale: [1, 1.2, 0.9, 1] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[10%] left-[15%] w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.06]"
-        style={{ background: "hsl(var(--accent))" }}
-      />
-      <motion.div
-        animate={{ x: [0, -120, 80, 0], y: [0, 60, -100, 0], scale: [1, 0.8, 1.1, 1] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[50%] right-[10%] w-[400px] h-[400px] rounded-full blur-[130px] opacity-[0.04]"
-        style={{ background: "hsl(var(--accent-blue))" }}
-      />
+      <canvas ref={canvasRef} className="absolute inset-0" style={{ pointerEvents: "none" }} />
 
       {/* Noise grain */}
       <div
