@@ -5,74 +5,95 @@ import { useEffect, useRef } from "react";
 // Normalized to a container: shoulders top, belt middle, knees bottom
 const orionConstellation = {
   name: "Orion",
-  offset: { x: -0.12, y: 0.08 },
-  rotation: -20, // degrees
+  offset: { x: 0.08, y: 0.08 },
   stars: [
     // Shoulders
-    { x: 0.200, y: 0.150, size: 1.5, color: "rgba(255, 204, 204, 0.7)" },  // Betelgeuse (reddish)
-    { x: 0.550, y: 0.160, size: 1.25, color: "rgba(255, 255, 255, 0.6)" }, // Bellatrix
+    { x: 0.04, y: 0.05, size: 3, color: "rgba(255, 204, 204, 0.7)" }, // Betelgeuse (reddish)
+    { x: 0.11, y: 0.052, size: 2.5, color: "rgba(255, 255, 255, 0.6)" }, // Bellatrix
     // Belt
-    { x: 0.275, y: 0.300, size: 1, color: "rgba(255, 255, 255, 0.55)" },  // Alnitak
-    { x: 0.375, y: 0.290, size: 1, color: "rgba(255, 255, 255, 0.55)" },  // Alnilam
-    { x: 0.475, y: 0.280, size: 1, color: "rgba(255, 255, 255, 0.55)" },  // Mintaka
+    { x: 0.055, y: 0.06, size: 2, color: "rgba(255, 255, 255, 0.55)" }, // Alnitak
+    { x: 0.075, y: 0.058, size: 2, color: "rgba(255, 255, 255, 0.55)" }, // Alnilam
+    { x: 0.095, y: 0.056, size: 2, color: "rgba(255, 255, 255, 0.55)" }, // Mintaka
     // Knees
-    { x: 0.175, y: 0.475, size: 1.5, color: "rgba(204, 255, 255, 0.7)" },   // Rigel (bluish)
-    { x: 0.500, y: 0.490, size: 1.25, color: "rgba(255, 255, 255, 0.6)" }, // Saiph
+    { x: 0.035, y: 0.075, size: 3, color: "rgba(204, 255, 255, 0.7)" }, // Rigel (bluish)
+    { x: 0.1, y: 0.078, size: 2.5, color: "rgba(255, 255, 255, 0.6)" }, // Saiph
     // Sword (below belt)
-    { x: 0.350, y: 0.360, size: 0.75, color: "rgba(255, 255, 255, 0.4)" },
-    { x: 0.360, y: 0.400, size: 0.75, color: "rgba(255, 255, 255, 0.35)" },
+    { x: 0.07, y: 0.052, size: 1.5, color: "rgba(255, 255, 255, 0.4)" },
+    { x: 0.072, y: 0.06, size: 1.5, color: "rgba(255, 255, 255, 0.35)" },
   ],
   lines: [
-    [0, 1],   // shoulder to shoulder
-    [0, 2],   // betelgeuse to belt
-    [1, 4],   // bellatrix to belt
-    [2, 3], [3, 4], // belt
-    [2, 5],   // belt to rigel
-    [4, 6],   // belt to saiph
-    [3, 7], [7, 8], // sword
+    [0, 1], // shoulder to shoulder
+    [0, 2], // betelgeuse to belt
+    [1, 4], // bellatrix to belt
+    [2, 3],
+    [3, 4], // belt
+    [2, 5], // belt to rigel
+    [4, 6], // belt to saiph
+    [3, 7],
+    [7, 8], // sword
   ],
 };
 
 const ursaMajor = {
   name: "Ursa Major",
-  offset: { x: 0.55, y: 0.05 },
+  offset: { x: 0.58, y: 0.05 },
   stars: [
-    // Bowl (Dubhe, Merak, Phecda, Megrez)
-    { x: 0.10, y: 0.05, size: 1, color: "rgba(255, 255, 255, 0.5)" },   // Dubhe (top-right of bowl)
-    { x: 0.15, y: 0.15, size: 1, color: "rgba(255, 255, 255, 0.5)" },   // Merak (bottom-right)
-    { x: 0.05, y: 0.20, size: 0.85, color: "rgba(255, 255, 255, 0.45)" }, // Phecda (bottom-left)
-    { x: 0.00, y: 0.10, size: 0.85, color: "rgba(255, 255, 255, 0.45)" }, // Megrez (top-left, handle junction)
-    // Handle (Alioth, Mizar, Alkaid)
-    { x: -0.08, y: 0.07, size: 0.85, color: "rgba(255, 255, 255, 0.45)" }, // Alioth
-    { x: -0.18, y: 0.05, size: 0.85, color: "rgba(255, 255, 255, 0.45)" }, // Mizar
-    { x: -0.25, y: 0.00, size: 0.85, color: "rgba(255, 255, 255, 0.45)" }, // Alkaid
+    { x: 0.0, y: 0.04, size: 2, color: "rgba(255, 255, 255, 0.5)" },
+    { x: 0.03, y: 0.0, size: 2, color: "rgba(255, 255, 255, 0.5)" },
+    { x: 0.07, y: 0.01, size: 2, color: "rgba(255, 255, 255, 0.5)" },
+    { x: 0.09, y: 0.04, size: 2, color: "rgba(255, 255, 255, 0.5)" },
+    { x: 0.12, y: 0.05, size: 1.8, color: "rgba(255, 255, 255, 0.45)" },
+    { x: 0.15, y: 0.03, size: 1.8, color: "rgba(255, 255, 255, 0.45)" },
+    { x: 0.17, y: 0.06, size: 1.8, color: "rgba(255, 255, 255, 0.45)" },
   ],
   lines: [
-    [0, 1], [1, 2], [2, 3], [3, 0], // bowl
-    [3, 4], [4, 5], [5, 6],          // handle
+    [0, 1],
+    [1, 2],
+    [2, 3],
+    [3, 0],
+    [3, 4],
+    [4, 5],
+    [5, 6],
   ],
 };
 
 const aquarius = {
   name: "Aquarius",
-  offset: { x: 0.70, y: 0.55 },
+  offset: { x: 0.7, y: 0.55 },
   stars: [
-    { x: 0.0, y: 0.0, size: 1, color: "rgba(255, 255, 255, 0.5)" },
-    { x: 0.03, y: 0.01, size: 0.9, color: "rgba(255, 255, 255, 0.45)" },
-    { x: 0.05, y: 0.0, size: 0.9, color: "rgba(255, 255, 255, 0.45)" },
-    { x: 0.04, y: 0.03, size: 0.9, color: "rgba(255, 255, 255, 0.45)" },
-    { x: 0.06, y: 0.05, size: 0.75, color: "rgba(255, 255, 255, 0.4)" },
-    { x: 0.08, y: 0.07, size: 0.75, color: "rgba(255, 255, 255, 0.4)" },
-    { x: 0.10, y: 0.06, size: 0.75, color: "rgba(255, 255, 255, 0.4)" },
-    { x: 0.10, y: 0.09, size: 0.75, color: "rgba(255, 255, 255, 0.4)" },
+    { x: 0.0, y: 0.0, size: 2, color: "rgba(255, 255, 255, 0.5)" },
+    { x: 0.03, y: 0.01, size: 1.8, color: "rgba(255, 255, 255, 0.45)" },
+    { x: 0.05, y: 0.0, size: 1.8, color: "rgba(255, 255, 255, 0.45)" },
+    { x: 0.04, y: 0.03, size: 1.8, color: "rgba(255, 255, 255, 0.45)" },
+    { x: 0.06, y: 0.05, size: 1.5, color: "rgba(255, 255, 255, 0.4)" },
+    { x: 0.08, y: 0.07, size: 1.5, color: "rgba(255, 255, 255, 0.4)" },
+    { x: 0.1, y: 0.06, size: 1.5, color: "rgba(255, 255, 255, 0.4)" },
+    { x: 0.1, y: 0.09, size: 1.5, color: "rgba(255, 255, 255, 0.4)" },
   ],
   lines: [
-    [0, 1], [1, 2], [1, 3], [3, 4], [4, 5], [5, 6], [5, 7],
+    [0, 1],
+    [1, 2],
+    [1, 3],
+    [3, 4],
+    [4, 5],
+    [5, 6],
+    [5, 7],
   ],
 };
 
 const allConstellations = [orionConstellation, ursaMajor, aquarius];
 
+// Comet type
+interface Comet {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  length: number;
+  opacity: number;
+  life: number;
+  maxLife: number;
+}
 
 const AnimatedBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -84,6 +105,8 @@ const AnimatedBackground = () => {
     if (!ctx) return;
 
     let animationId: number;
+    let comets: Comet[] = [];
+    let lastCometSpawn = 0;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -92,6 +115,36 @@ const AnimatedBackground = () => {
     resize();
     window.addEventListener("resize", resize);
 
+    const spawnComet = () => {
+      const side = Math.random();
+      let x: number, y: number, vx: number, vy: number;
+
+      if (side < 0.5) {
+        // From top
+        x = Math.random() * canvas.width;
+        y = -10;
+        vx = (Math.random() - 0.3) * 3;
+        vy = Math.random() * 2 + 1.5;
+      } else {
+        // From left
+        x = -10;
+        y = Math.random() * canvas.height * 0.6;
+        vx = Math.random() * 3 + 1.5;
+        vy = Math.random() * 1.5 + 0.5;
+      }
+
+      const maxLife = 120 + Math.random() * 80;
+      comets.push({
+        x,
+        y,
+        vx,
+        vy,
+        length: 40 + Math.random() * 60,
+        opacity: 0.3 + Math.random() * 0.4,
+        life: 0,
+        maxLife,
+      });
+    };
 
     const drawConstellations = () => {
       const w = canvas.width;
@@ -100,30 +153,19 @@ const AnimatedBackground = () => {
       allConstellations.forEach((constellation) => {
         const ox = constellation.offset.x * w;
         const oy = constellation.offset.y * h;
-        const rot = ((constellation as any).rotation || 0) * Math.PI / 180;
-
-        // Helper to apply rotation around constellation center
-        const transform = (sx: number, sy: number) => {
-          const cx = ox + 0.3 * w; // approx center
-          const cy = oy + 0.25 * h;
-          const dx = sx - cx;
-          const dy = sy - cy;
-          return {
-            x: cx + dx * Math.cos(rot) - dy * Math.sin(rot),
-            y: cy + dx * Math.sin(rot) + dy * Math.cos(rot),
-          };
-        };
 
         // Draw lines
         constellation.lines.forEach(([a, b]) => {
           const starA = constellation.stars[a];
           const starB = constellation.stars[b];
-          const pa = transform(ox + starA.x * w, oy + starA.y * h);
-          const pb = transform(ox + starB.x * w, oy + starB.y * h);
+          const ax = ox + starA.x * w;
+          const ay = oy + starA.y * h;
+          const bx = ox + starB.x * w;
+          const by = oy + starB.y * h;
 
           ctx.beginPath();
-          ctx.moveTo(pa.x, pa.y);
-          ctx.lineTo(pb.x, pb.y);
+          ctx.moveTo(ax, ay);
+          ctx.lineTo(bx, by);
           ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
           ctx.lineWidth = 0.5;
           ctx.stroke();
@@ -131,7 +173,8 @@ const AnimatedBackground = () => {
 
         // Draw stars with their specific colors and sizes
         constellation.stars.forEach((star) => {
-          const { x: sx, y: sy } = transform(ox + star.x * w, oy + star.y * h);
+          const sx = ox + star.x * w;
+          const sy = oy + star.y * h;
 
           // Glow
           ctx.beginPath();
@@ -151,10 +194,63 @@ const AnimatedBackground = () => {
       });
     };
 
+    const drawComets = () => {
+      comets.forEach((comet) => {
+        const progress = comet.life / comet.maxLife;
+        // Fade in then fade out
+        const fadeAlpha = progress < 0.1 ? progress / 0.1 : progress > 0.7 ? (1 - progress) / 0.3 : 1;
+        const alpha = comet.opacity * fadeAlpha;
 
-    const animate = () => {
+        const speed = Math.sqrt(comet.vx * comet.vx + comet.vy * comet.vy);
+        const nx = -comet.vx / speed;
+        const ny = -comet.vy / speed;
+        const tailX = comet.x + nx * comet.length;
+        const tailY = comet.y + ny * comet.length;
+
+        // Comet tail gradient
+        const gradient = ctx.createLinearGradient(comet.x, comet.y, tailX, tailY);
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+        gradient.addColorStop(0.3, `rgba(255, 255, 255, ${alpha * 0.4})`);
+        gradient.addColorStop(1, "transparent");
+
+        ctx.beginPath();
+        ctx.moveTo(comet.x, comet.y);
+        ctx.lineTo(tailX, tailY);
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Head glow
+        ctx.beginPath();
+        ctx.arc(comet.x, comet.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.fill();
+
+        // Update
+        comet.x += comet.vx;
+        comet.y += comet.vy;
+        comet.life++;
+      });
+
+      // Remove dead comets
+      comets = comets.filter((c) => c.life < c.maxLife);
+    };
+
+    const animate = (t: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       drawConstellations();
+
+      // Spawn comets sparingly (every 3-6 seconds)
+      if (t - lastCometSpawn > 3000 + Math.random() * 3000) {
+        if (comets.length < 3) {
+          spawnComet();
+          lastCometSpawn = t;
+        }
+      }
+
+      drawComets();
+
       animationId = requestAnimationFrame(animate);
     };
 
