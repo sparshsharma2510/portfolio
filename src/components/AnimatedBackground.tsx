@@ -5,7 +5,8 @@ import { useEffect, useRef } from "react";
 // Normalized to a container: shoulders top, belt middle, knees bottom
 const orionConstellation = {
   name: "Orion",
-  offset: { x: 0.08, y: 0.08 },
+  offset: { x: -0.42, y: 0.08 },
+  rotation: 45, // degrees
   stars: [
     // Shoulders
     { x: 0.200, y: 0.150, size: 1.5, color: "rgba(255, 204, 204, 0.7)" },  // Betelgeuse (reddish)
@@ -99,19 +100,30 @@ const AnimatedBackground = () => {
       allConstellations.forEach((constellation) => {
         const ox = constellation.offset.x * w;
         const oy = constellation.offset.y * h;
+        const rot = ((constellation as any).rotation || 0) * Math.PI / 180;
+
+        // Helper to apply rotation around constellation center
+        const transform = (sx: number, sy: number) => {
+          const cx = ox + 0.3 * w; // approx center
+          const cy = oy + 0.25 * h;
+          const dx = sx - cx;
+          const dy = sy - cy;
+          return {
+            x: cx + dx * Math.cos(rot) - dy * Math.sin(rot),
+            y: cy + dx * Math.sin(rot) + dy * Math.cos(rot),
+          };
+        };
 
         // Draw lines
         constellation.lines.forEach(([a, b]) => {
           const starA = constellation.stars[a];
           const starB = constellation.stars[b];
-          const ax = ox + starA.x * w;
-          const ay = oy + starA.y * h;
-          const bx = ox + starB.x * w;
-          const by = oy + starB.y * h;
+          const pa = transform(ox + starA.x * w, oy + starA.y * h);
+          const pb = transform(ox + starB.x * w, oy + starB.y * h);
 
           ctx.beginPath();
-          ctx.moveTo(ax, ay);
-          ctx.lineTo(bx, by);
+          ctx.moveTo(pa.x, pa.y);
+          ctx.lineTo(pb.x, pb.y);
           ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
           ctx.lineWidth = 0.5;
           ctx.stroke();
@@ -119,8 +131,7 @@ const AnimatedBackground = () => {
 
         // Draw stars with their specific colors and sizes
         constellation.stars.forEach((star) => {
-          const sx = ox + star.x * w;
-          const sy = oy + star.y * h;
+          const { x: sx, y: sy } = transform(ox + star.x * w, oy + star.y * h);
 
           // Glow
           ctx.beginPath();
