@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Code2, Brain, Zap } from "lucide-react";
 import InteractiveCard from "./InteractiveCard";
+import AnimatedIcon from "./AnimatedIcon";
 
 const highlights = [
   {
@@ -56,13 +57,9 @@ const AboutSection = () => {
             >
               <InteractiveCard className="glass-panel p-8 group h-full">
                 <div className="relative z-10">
-                  <motion.div
-                    whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 transition-colors"
-                  >
-                    <item.icon size={22} className="text-accent" />
-                  </motion.div>
+                  <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 transition-colors">
+                    <AnimatedIcon icon={item.icon} size={22} />
+                  </div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                 </div>

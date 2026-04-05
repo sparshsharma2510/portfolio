@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Mail, Github, Linkedin, ArrowUpRight } from "lucide-react";
 import InteractiveCard from "./InteractiveCard";
+import AnimatedIcon from "./AnimatedIcon";
 
 const links = [
   { icon: Mail, label: "Email", href: "mailto:sparsh@example.com", display: "sparsh@example.com" },
@@ -44,12 +45,9 @@ const ContactSection = () => {
                 <InteractiveCard className="glass-panel p-5 group">
                   <div className="relative z-10 flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <motion.div
-                        whileHover={{ rotate: 15 }}
-                        className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors"
-                      >
-                        <link.icon size={18} className="text-accent" />
-                      </motion.div>
+                      <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                        <AnimatedIcon icon={link.icon} size={18} />
+                      </div>
                       <div>
                         <p className="text-sm font-semibold text-foreground">{link.label}</p>
                         <p className="text-xs text-muted-foreground">{link.display}</p>

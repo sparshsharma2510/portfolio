@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Briefcase } from "lucide-react";
 import InteractiveCard from "./InteractiveCard";
+import AnimatedIcon from "./AnimatedIcon";
 
 const jobs = [
   {
@@ -70,19 +71,16 @@ const CareerJourneySection = () => {
                   transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.6 + i * 0.35 }}
                   whileHover={{ scale: 1.15, rotate: 5 }}
                 >
-                  <Briefcase size={20} className="text-accent" />
+                  <AnimatedIcon icon={Briefcase} size={20} />
                 </motion.div>
 
                 <InteractiveCard className="glass-panel p-6 md:p-8 flex-1 group">
                   <div className="relative z-10">
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
                       <h3 className="text-lg md:text-xl font-semibold text-foreground">{job.company}</h3>
-                      <span className="text-xs font-medium px-3 py-1 rounded-full bg-accent/10 text-accent">
-                        {job.period}
-                      </span>
+                      <span className="text-xs font-medium px-3 py-1 rounded-full bg-accent/10 text-accent">{job.period}</span>
                     </div>
                     <p className="text-sm font-medium text-accent mb-4">{job.role}</p>
-
                     <ul className="space-y-3">
                       {job.highlights.map((point, j) => (
                         <motion.li
