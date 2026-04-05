@@ -35,39 +35,75 @@ const projects = [
   },
 ];
 
-const TubelightBorder = ({ isInView }: { isInView: boolean }) => {
+const SectionTubelightFlicker = ({ isInView }: { isInView: boolean }) => {
   const [flickerPhase, setFlickerPhase] = useState(0);
 
   useEffect(() => {
     if (!isInView) return;
-    // Simulate tubelight flickering startup
     const phases = [
-      { delay: 0, opacity: 0 },
-      { delay: 300, opacity: 0.3 },
-      { delay: 500, opacity: 0 },
-      { delay: 700, opacity: 0.5 },
-      { delay: 900, opacity: 0.2 },
-      { delay: 1100, opacity: 0.7 },
-      { delay: 1300, opacity: 0.4 },
-      { delay: 1500, opacity: 1 },
+      { delay: 0 },
+      { delay: 200 },
+      { delay: 400 },
+      { delay: 600 },
+      { delay: 800 },
+      { delay: 1000 },
+      { delay: 1200 },
+      { delay: 1500 },
     ];
-    phases.forEach((phase, i) => {
-      setTimeout(() => setFlickerPhase(i), phase.delay);
+    phases.forEach((_, i) => {
+      setTimeout(() => setFlickerPhase(i), phases[i].delay);
     });
   }, [isInView]);
 
-  const flickerOpacities = [0, 0.3, 0, 0.5, 0.2, 0.7, 0.4, 1];
+  const flickerOpacities = [0, 0.15, 0.03, 0.25, 0.08, 0.4, 0.15, 1];
   const currentOpacity = isInView ? flickerOpacities[flickerPhase] ?? 1 : 0;
 
   return (
-    <div
-      className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-100"
-      style={{
-        opacity: currentOpacity,
-        boxShadow: `inset 0 0 1px hsl(var(--accent) / 0.4), 0 0 15px hsl(var(--accent) / 0.1), 0 0 30px hsl(var(--accent) / 0.05)`,
-        border: `1px solid hsl(var(--accent) / ${currentOpacity * 0.3})`,
-      }}
-    />
+    <>
+      {/* Overall section glow overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none transition-opacity duration-150 z-0"
+        style={{
+          opacity: currentOpacity * 0.15,
+          background: `radial-gradient(ellipse at 50% 30%, hsl(var(--accent) / 0.3), transparent 70%)`,
+        }}
+      />
+      {/* Grid illumination that flickers on */}
+      <div
+        className="absolute inset-0 pointer-events-none transition-opacity duration-150 z-0"
+        style={{
+          opacity: currentOpacity,
+        }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(hsl(var(--accent) / ${0.12 * currentOpacity}) 1px, transparent 1px),
+              linear-gradient(90deg, hsl(var(--accent) / ${0.12 * currentOpacity}) 1px, transparent 1px)
+            `,
+            backgroundSize: "60px 60px",
+          }}
+        />
+      </div>
+      {/* Ambient top/bottom light bars */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[1px] pointer-events-none transition-opacity duration-100"
+        style={{
+          opacity: currentOpacity * 0.6,
+          background: `linear-gradient(90deg, transparent, hsl(var(--accent) / 0.5), transparent)`,
+          boxShadow: `0 0 20px hsl(var(--accent) / ${currentOpacity * 0.3}), 0 0 60px hsl(var(--accent) / ${currentOpacity * 0.1})`,
+        }}
+      />
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[1px] pointer-events-none transition-opacity duration-100"
+        style={{
+          opacity: currentOpacity * 0.4,
+          background: `linear-gradient(90deg, transparent, hsl(var(--accent) / 0.3), transparent)`,
+          boxShadow: `0 0 15px hsl(var(--accent) / ${currentOpacity * 0.2})`,
+        }}
+      />
+    </>
   );
 };
 
@@ -76,15 +112,18 @@ const ProjectsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="projects" className="py-32 relative z-10" ref={ref}>
-      {/* Tech grid background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <section id="projects" className="py-32 relative z-10 overflow-hidden" ref={ref}>
+      {/* Tubelight flicker for the entire section */}
+      <SectionTubelightFlicker isInView={isInView} />
+
+      {/* Solid grid background (always visible, subtle) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div
-          className="absolute inset-0 opacity-[0.04]"
+          className="absolute inset-0 opacity-[0.06]"
           style={{
             backgroundImage: `
-              linear-gradient(hsl(var(--accent) / 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, hsl(var(--accent) / 0.3) 1px, transparent 1px)
+              linear-gradient(hsl(var(--accent) / 0.5) 1px, transparent 1px),
+              linear-gradient(90deg, hsl(var(--accent) / 0.5) 1px, transparent 1px)
             `,
             backgroundSize: "60px 60px",
           }}
@@ -100,34 +139,9 @@ const ProjectsSection = () => {
             boxShadow: "0 0 20px hsl(var(--accent) / 0.3), 0 0 60px hsl(var(--accent) / 0.1)",
           }}
         />
-        {/* Grid node dots at intersections */}
-        {isInView && (
-          <div className="absolute inset-0">
-            {Array.from({ length: 8 }).map((_, row) =>
-              Array.from({ length: 12 }).map((_, col) => (
-                <motion.div
-                  key={`${row}-${col}`}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: [0, 0.6, 0.3], scale: [0, 1.2, 1] }}
-                  transition={{
-                    delay: 0.8 + (row + col) * 0.05,
-                    duration: 0.6,
-                  }}
-                  className="absolute w-1 h-1 rounded-full"
-                  style={{
-                    top: `${row * 60}px`,
-                    left: `${col * 60}px`,
-                    background: "hsl(var(--accent))",
-                    boxShadow: "0 0 4px hsl(var(--accent) / 0.5)",
-                  }}
-                />
-              ))
-            )}
-          </div>
-        )}
       </div>
 
-      <div className="section-container relative">
+      <div className="section-container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -150,7 +164,6 @@ const ProjectsSection = () => {
               transition={{ duration: 0.5, delay: 0.2 + i * 0.12 }}
               className="relative"
             >
-              <TubelightBorder isInView={isInView} />
               <InteractiveCard className="glass-panel p-8 group h-full">
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-6">
