@@ -141,21 +141,9 @@ const AnimatedBackground = () => {
     };
 
 
-    const animate = (t: number) => {
+    const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       drawConstellations();
-
-      // Spawn comets sparingly (every 3-6 seconds)
-      if (t - lastCometSpawn > 3000 + Math.random() * 3000) {
-        if (comets.length < 3) {
-          spawnComet();
-          lastCometSpawn = t;
-        }
-      }
-
-      drawComets();
-
       animationId = requestAnimationFrame(animate);
     };
 
