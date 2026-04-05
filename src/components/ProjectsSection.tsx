@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ExternalLink, Users, Brain, Sprout, Music } from "lucide-react";
+import InteractiveCard from "./InteractiveCard";
 
 const projects = [
   {
@@ -38,7 +39,7 @@ const ProjectsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="projects" className="py-32" ref={ref}>
+    <section id="projects" className="py-32 relative z-10" ref={ref}>
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -60,39 +61,45 @@ const ProjectsSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.12 }}
-              className="group relative glass-panel p-8 hover:scale-[1.02] transition-all duration-500"
             >
-              {/* Hover glow */}
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  background: "radial-gradient(400px circle at 50% 50%, hsl(239 84% 67% / 0.06), transparent 60%)",
-                }}
-              />
-
-              <div className="relative z-10">
-                <div className="flex items-start justify-between mb-6">
-                  <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${project.accent} bg-opacity-10 flex items-center justify-center`}
-                    style={{ background: `linear-gradient(135deg, hsl(239 84% 67% / 0.15), hsl(217 91% 60% / 0.15))` }}
-                  >
-                    <project.icon size={22} className="text-accent" />
-                  </div>
-                  <ExternalLink size={16} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-
-                <h3 className="text-xl font-bold text-foreground mb-3">{project.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6">{project.desc}</p>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-muted-foreground font-medium"
+              <InteractiveCard className="glass-panel p-8 group h-full">
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-6">
+                    <motion.div
+                      whileHover={{ rotate: [0, -10, 10, 0] }}
+                      transition={{ duration: 0.4 }}
+                      className="w-12 h-12 rounded-2xl flex items-center justify-center"
+                      style={{ background: "linear-gradient(135deg, hsl(239 84% 67% / 0.15), hsl(217 91% 60% / 0.15))" }}
                     >
-                      {t}
-                    </span>
-                  ))}
+                      <project.icon size={22} className="text-accent" />
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, x: -5 }}
+                      whileHover={{ x: 2 }}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <ExternalLink size={16} className="text-muted-foreground" />
+                    </motion.div>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-foreground mb-3">{project.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">{project.desc}</p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t, j) => (
+                      <motion.span
+                        key={t}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{ delay: 0.4 + i * 0.12 + j * 0.05 }}
+                        className="text-xs px-3 py-1.5 rounded-lg bg-secondary text-muted-foreground font-medium"
+                      >
+                        {t}
+                      </motion.span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </InteractiveCard>
             </motion.div>
           ))}
         </div>

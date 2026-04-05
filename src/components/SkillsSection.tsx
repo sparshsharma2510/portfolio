@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Monitor, Server, Cpu, Cloud } from "lucide-react";
+import InteractiveCard from "./InteractiveCard";
 
 const categories = [
   {
@@ -30,7 +31,7 @@ const SkillsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="skills" className="py-32" ref={ref}>
+    <section id="skills" className="py-32 relative z-10" ref={ref}>
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -52,24 +53,35 @@ const SkillsSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
-              className="glass-panel p-8 group hover:scale-[1.02] transition-transform duration-300"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                  <cat.icon size={20} className="text-accent" />
+              <InteractiveCard className="glass-panel p-8 group h-full">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-4 mb-6">
+                    <motion.div
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors"
+                    >
+                      <cat.icon size={20} className="text-accent" />
+                    </motion.div>
+                    <h3 className="text-lg font-semibold text-foreground">{cat.title}</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {cat.skills.map((skill, j) => (
+                      <motion.span
+                        key={skill}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ delay: 0.3 + i * 0.1 + j * 0.05 }}
+                        whileHover={{ scale: 1.08, y: -2 }}
+                        className="text-sm px-4 py-2 rounded-xl bg-secondary text-secondary-foreground font-medium cursor-default"
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground">{cat.title}</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {cat.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="text-sm px-4 py-2 rounded-xl bg-secondary text-secondary-foreground font-medium"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
+              </InteractiveCard>
             </motion.div>
           ))}
         </div>

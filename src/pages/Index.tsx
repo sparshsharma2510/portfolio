@@ -6,19 +6,24 @@ import ExperienceSection from "@/components/ExperienceSection";
 import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ContactSection from "@/components/ContactSection";
+import SmoothScroll from "@/components/SmoothScroll";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 const Index = () => {
   return (
     <div className="dark">
-      <div className="bg-background text-foreground min-h-screen">
-        <Navbar />
-        <HeroSection />
-        <AboutSection />
-        <CareerJourneySection />
-        <ExperienceSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <ContactSection />
+      <div className="bg-background text-foreground min-h-screen relative">
+        <AnimatedBackground />
+        <SmoothScroll>
+          <Navbar />
+          <HeroSection />
+          <AboutSection />
+          <CareerJourneySection />
+          <ExperienceSection />
+          <SkillsSection />
+          <ProjectsSection />
+          <ContactSection />
+        </SmoothScroll>
       </div>
     </div>
   );

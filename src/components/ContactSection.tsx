@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Mail, Github, Linkedin, ArrowUpRight } from "lucide-react";
+import InteractiveCard from "./InteractiveCard";
 
 const links = [
   { icon: Mail, label: "Email", href: "mailto:sparsh@example.com", display: "sparsh@example.com" },
@@ -13,7 +14,7 @@ const ContactSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="contact" className="py-32" ref={ref}>
+    <section id="contact" className="py-32 relative z-10" ref={ref}>
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -33,31 +34,37 @@ const ContactSection = () => {
 
         <div className="max-w-lg mx-auto space-y-4">
           {links.map((link, i) => (
-            <motion.a
+            <motion.div
               key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
-              className="glass-panel p-5 flex items-center justify-between group hover:scale-[1.02] transition-all duration-300 block"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                  <link.icon size={18} className="text-accent" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-foreground">{link.label}</p>
-                  <p className="text-xs text-muted-foreground">{link.display}</p>
-                </div>
-              </div>
-              <ArrowUpRight size={16} className="text-muted-foreground group-hover:text-accent transition-colors" />
-            </motion.a>
+              <a href={link.href} target="_blank" rel="noopener noreferrer" className="block">
+                <InteractiveCard className="glass-panel p-5 group">
+                  <div className="relative z-10 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <motion.div
+                        whileHover={{ rotate: 15 }}
+                        className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors"
+                      >
+                        <link.icon size={18} className="text-accent" />
+                      </motion.div>
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">{link.label}</p>
+                        <p className="text-xs text-muted-foreground">{link.display}</p>
+                      </div>
+                    </div>
+                    <motion.div whileHover={{ x: 3, y: -3 }}>
+                      <ArrowUpRight size={16} className="text-muted-foreground group-hover:text-accent transition-colors" />
+                    </motion.div>
+                  </div>
+                </InteractiveCard>
+              </a>
+            </motion.div>
           ))}
         </div>
 
-        {/* Footer */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}

@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Trophy, Award, GraduationCap, Gem } from "lucide-react";
+import InteractiveCard from "./InteractiveCard";
 
 const achievements = [
   {
@@ -38,7 +39,7 @@ const ExperienceSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className="py-32" ref={ref}>
+    <section id="experience" className="py-32 relative z-10" ref={ref}>
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -54,7 +55,6 @@ const ExperienceSection = () => {
         </motion.div>
 
         <div className="relative">
-          {/* Timeline line */}
           <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-border" />
 
           <div className="space-y-8">
@@ -66,21 +66,25 @@ const ExperienceSection = () => {
                 transition={{ duration: 0.5, delay: 0.2 + i * 0.15 }}
                 className="relative flex gap-6 md:gap-8"
               >
-                {/* Timeline dot */}
-                <div className="relative z-10 w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0">
+                <motion.div
+                  whileHover={{ scale: 1.15, rotate: 5 }}
+                  className="relative z-10 w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0"
+                >
                   <item.icon size={20} className="text-accent" />
-                </div>
+                </motion.div>
 
-                <div className="glass-panel p-6 flex-1 group hover:scale-[1.01] transition-transform duration-300">
-                  <div className="flex flex-wrap items-center gap-3 mb-2">
-                    <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-                    <span className="text-xs font-medium px-3 py-1 rounded-full bg-accent/10 text-accent">
-                      {item.tag}
-                    </span>
+                <InteractiveCard className="glass-panel p-6 flex-1 group">
+                  <div className="relative z-10">
+                    <div className="flex flex-wrap items-center gap-3 mb-2">
+                      <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
+                      <span className="text-xs font-medium px-3 py-1 rounded-full bg-accent/10 text-accent">
+                        {item.tag}
+                      </span>
+                    </div>
+                    <p className="text-sm font-medium text-accent mb-2">{item.subtitle}</p>
+                    <p className="text-sm text-muted-foreground">{item.desc}</p>
                   </div>
-                  <p className="text-sm font-medium text-accent mb-2">{item.subtitle}</p>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </div>
+                </InteractiveCard>
               </motion.div>
             ))}
           </div>
