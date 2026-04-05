@@ -34,18 +34,21 @@ const orionConstellation = {
 
 const ursaMajor = {
   name: "Ursa Major",
-  offset: { x: 0.58, y: 0.05 },
+  offset: { x: 0.55, y: 0.05 },
   stars: [
-    { x: 0.0, y: 0.04, size: 1, color: "rgba(255, 255, 255, 0.5)" },
-    { x: 0.03, y: 0.0, size: 1, color: "rgba(255, 255, 255, 0.5)" },
-    { x: 0.07, y: 0.01, size: 1, color: "rgba(255, 255, 255, 0.5)" },
-    { x: 0.09, y: 0.04, size: 1, color: "rgba(255, 255, 255, 0.5)" },
-    { x: 0.12, y: 0.05, size: 0.9, color: "rgba(255, 255, 255, 0.45)" },
-    { x: 0.15, y: 0.03, size: 0.9, color: "rgba(255, 255, 255, 0.45)" },
-    { x: 0.17, y: 0.06, size: 0.9, color: "rgba(255, 255, 255, 0.45)" },
+    // Bowl (Dubhe, Merak, Phecda, Megrez)
+    { x: 0.10, y: 0.05, size: 1, color: "rgba(255, 255, 255, 0.5)" },   // Dubhe (top-right of bowl)
+    { x: 0.15, y: 0.15, size: 1, color: "rgba(255, 255, 255, 0.5)" },   // Merak (bottom-right)
+    { x: 0.05, y: 0.20, size: 0.85, color: "rgba(255, 255, 255, 0.45)" }, // Phecda (bottom-left)
+    { x: 0.00, y: 0.10, size: 0.85, color: "rgba(255, 255, 255, 0.45)" }, // Megrez (top-left, handle junction)
+    // Handle (Alioth, Mizar, Alkaid)
+    { x: -0.08, y: 0.07, size: 0.85, color: "rgba(255, 255, 255, 0.45)" }, // Alioth
+    { x: -0.18, y: 0.05, size: 0.85, color: "rgba(255, 255, 255, 0.45)" }, // Mizar
+    { x: -0.25, y: 0.00, size: 0.85, color: "rgba(255, 255, 255, 0.45)" }, // Alkaid
   ],
   lines: [
-    [0, 1], [1, 2], [2, 3], [3, 0], [3, 4], [4, 5], [5, 6],
+    [0, 1], [1, 2], [2, 3], [3, 0], // bowl
+    [3, 4], [4, 5], [5, 6],          // handle
   ],
 };
 
