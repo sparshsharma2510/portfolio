@@ -72,17 +72,6 @@ const aquarius = {
 
 const allConstellations = [orionConstellation, ursaMajor, aquarius];
 
-// Comet type
-interface Comet {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  length: number;
-  opacity: number;
-  life: number;
-  maxLife: number;
-}
 
 const AnimatedBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
