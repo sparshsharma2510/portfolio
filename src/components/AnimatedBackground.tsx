@@ -8,18 +8,18 @@ const orionConstellation = {
   offset: { x: 0.08, y: 0.08 },
   stars: [
     // Shoulders
-    { x: 0.040, y: 0.030, size: 3, color: "rgba(255, 204, 204, 0.7)" },  // Betelgeuse (reddish)
-    { x: 0.110, y: 0.032, size: 2.5, color: "rgba(255, 255, 255, 0.6)" }, // Bellatrix
+    { x: 0.200, y: 0.150, size: 1.5, color: "rgba(255, 204, 204, 0.7)" },  // Betelgeuse (reddish)
+    { x: 0.550, y: 0.160, size: 1.25, color: "rgba(255, 255, 255, 0.6)" }, // Bellatrix
     // Belt
-    { x: 0.055, y: 0.060, size: 2, color: "rgba(255, 255, 255, 0.55)" },  // Alnitak
-    { x: 0.075, y: 0.058, size: 2, color: "rgba(255, 255, 255, 0.55)" },  // Alnilam
-    { x: 0.095, y: 0.056, size: 2, color: "rgba(255, 255, 255, 0.55)" },  // Mintaka
+    { x: 0.275, y: 0.300, size: 1, color: "rgba(255, 255, 255, 0.55)" },  // Alnitak
+    { x: 0.375, y: 0.290, size: 1, color: "rgba(255, 255, 255, 0.55)" },  // Alnilam
+    { x: 0.475, y: 0.280, size: 1, color: "rgba(255, 255, 255, 0.55)" },  // Mintaka
     // Knees
-    { x: 0.035, y: 0.095, size: 3, color: "rgba(204, 255, 255, 0.7)" },   // Rigel (bluish)
-    { x: 0.100, y: 0.098, size: 2.5, color: "rgba(255, 255, 255, 0.6)" }, // Saiph
+    { x: 0.175, y: 0.475, size: 1.5, color: "rgba(204, 255, 255, 0.7)" },   // Rigel (bluish)
+    { x: 0.500, y: 0.490, size: 1.25, color: "rgba(255, 255, 255, 0.6)" }, // Saiph
     // Sword (below belt)
-    { x: 0.070, y: 0.072, size: 1.5, color: "rgba(255, 255, 255, 0.4)" },
-    { x: 0.072, y: 0.080, size: 1.5, color: "rgba(255, 255, 255, 0.35)" },
+    { x: 0.350, y: 0.360, size: 0.75, color: "rgba(255, 255, 255, 0.4)" },
+    { x: 0.360, y: 0.400, size: 0.75, color: "rgba(255, 255, 255, 0.35)" },
   ],
   lines: [
     [0, 1],   // shoulder to shoulder
