@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Code2, Brain, Zap } from "lucide-react";
+import InteractiveCard from "./InteractiveCard";
 
 const highlights = [
   {
@@ -26,7 +26,7 @@ const AboutSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className="py-32" ref={ref}>
+    <section id="about" className="py-32 relative z-10" ref={ref}>
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -53,13 +53,20 @@ const AboutSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 + i * 0.15 }}
-              className="glass-panel p-8 group hover:scale-[1.02] transition-transform duration-300"
             >
-              <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 transition-colors">
-                <item.icon size={22} className="text-accent" />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+              <InteractiveCard className="glass-panel p-8 group h-full">
+                <div className="relative z-10">
+                  <motion.div
+                    whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 transition-colors"
+                  >
+                    <item.icon size={22} className="text-accent" />
+                  </motion.div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              </InteractiveCard>
             </motion.div>
           ))}
         </div>
