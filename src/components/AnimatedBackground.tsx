@@ -140,51 +140,6 @@ const AnimatedBackground = () => {
       });
     };
 
-    const drawComets = () => {
-      comets.forEach((comet) => {
-        const progress = comet.life / comet.maxLife;
-        // Fade in then fade out
-        const fadeAlpha = progress < 0.1
-          ? progress / 0.1
-          : progress > 0.7
-            ? (1 - progress) / 0.3
-            : 1;
-        const alpha = comet.opacity * fadeAlpha;
-
-        const speed = Math.sqrt(comet.vx * comet.vx + comet.vy * comet.vy);
-        const nx = -comet.vx / speed;
-        const ny = -comet.vy / speed;
-        const tailX = comet.x + nx * comet.length;
-        const tailY = comet.y + ny * comet.length;
-
-        // Comet tail gradient
-        const gradient = ctx.createLinearGradient(comet.x, comet.y, tailX, tailY);
-        gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
-        gradient.addColorStop(0.3, `rgba(255, 255, 255, ${alpha * 0.4})`);
-        gradient.addColorStop(1, "transparent");
-
-        ctx.beginPath();
-        ctx.moveTo(comet.x, comet.y);
-        ctx.lineTo(tailX, tailY);
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
-        // Head glow
-        ctx.beginPath();
-        ctx.arc(comet.x, comet.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-        ctx.fill();
-
-        // Update
-        comet.x += comet.vx;
-        comet.y += comet.vy;
-        comet.life++;
-      });
-
-      // Remove dead comets
-      comets = comets.filter((c) => c.life < c.maxLife);
-    };
 
     const animate = (t: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
