@@ -116,16 +116,22 @@ const ProjectsSection = () => {
       {/* Tubelight flicker for the entire section */}
       <SectionTubelightFlicker isInView={isInView} />
 
-      {/* Solid grid background (always visible, subtle) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      {/* Partial grid background (25-35% coverage) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 flex items-center justify-center">
         <div
-          className="absolute inset-0 opacity-[0.06]"
+          className="absolute opacity-[0.08]"
           style={{
+            width: "30%",
+            height: "30%",
+            top: "35%",
+            left: "35%",
             backgroundImage: `
               linear-gradient(hsl(var(--accent) / 0.5) 1px, transparent 1px),
               linear-gradient(90deg, hsl(var(--accent) / 0.5) 1px, transparent 1px)
             `,
             backgroundSize: "60px 60px",
+            maskImage: "radial-gradient(ellipse at center, black 40%, transparent 100%)",
+            WebkitMaskImage: "radial-gradient(ellipse at center, black 40%, transparent 100%)",
           }}
         />
         {/* Animated scan line */}

@@ -107,10 +107,7 @@ const AnimatedBackground = () => {
         const ox = constellation.offset.x * w;
         const oy = constellation.offset.y * h;
 
-        // Subtle twinkle based on time
-        const twinkle = 0.15 + Math.sin(time * 0.001 + constellation.offset.x * 10) * 0.08;
-
-        // Draw connection lines
+        // Draw connection lines - static white
         constellation.lines.forEach(([a, b]) => {
           const starA = constellation.stars[a];
           const starB = constellation.stars[b];
@@ -122,31 +119,29 @@ const AnimatedBackground = () => {
           ctx.beginPath();
           ctx.moveTo(ax, ay);
           ctx.lineTo(bx, by);
-          ctx.strokeStyle = `hsla(239, 84%, 67%, ${twinkle * 0.4})`;
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
           ctx.lineWidth = 0.5;
           ctx.stroke();
         });
 
-        // Draw stars
-        constellation.stars.forEach((star, si) => {
+        // Draw stars - static white dots
+        constellation.stars.forEach((star) => {
           const sx = ox + star.x * w;
           const sy = oy + star.y * h;
-          const starTwinkle = twinkle + Math.sin(time * 0.002 + si * 1.5) * 0.06;
-          const size = 1.5 + Math.sin(time * 0.003 + si) * 0.5;
 
-          // Glow
+          // Soft glow
           ctx.beginPath();
-          ctx.arc(sx, sy, size * 3, 0, Math.PI * 2);
-          const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, size * 3);
-          glow.addColorStop(0, `hsla(239, 84%, 67%, ${starTwinkle * 0.3})`);
+          ctx.arc(sx, sy, 4, 0, Math.PI * 2);
+          const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, 4);
+          glow.addColorStop(0, "rgba(255, 255, 255, 0.15)");
           glow.addColorStop(1, "transparent");
           ctx.fillStyle = glow;
           ctx.fill();
 
           // Star dot
           ctx.beginPath();
-          ctx.arc(sx, sy, size, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(240, 7%, 97%, ${starTwinkle * 0.8})`;
+          ctx.arc(sx, sy, 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
           ctx.fill();
         });
       });

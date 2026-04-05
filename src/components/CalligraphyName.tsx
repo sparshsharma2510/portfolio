@@ -23,8 +23,7 @@ const CalligraphyName = () => {
       <h1
         className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight"
         style={{
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif',
+          fontFamily: "'Inter', sans-serif",
           letterSpacing: "-0.03em",
         }}
       >
